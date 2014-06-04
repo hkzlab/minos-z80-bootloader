@@ -13,4 +13,7 @@ typedef	uint8_t (*rom_n8vem_ide_read)(uint8_t *dest, uint8_t sect, uint8_t head,
 typedef	uint8_t (*rom_n8vem_ide_reg_rd)(uint8_t reg);
 typedef	uint8_t (*rom_n8vem_ide_reg_wr)(uint8_t reg, uint8_t val);
 
+static rom_getchar getchar;
+static rom_putchar putchar;
+
 #endif /* _ROM_FUNCTIONS_ */
