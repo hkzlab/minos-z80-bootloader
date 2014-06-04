@@ -1,4 +1,4 @@
-minos-z80-bootloader
+MINOS Bootloader
 ====================
 
 IDE bootloader for MINOS Z80 monitor
