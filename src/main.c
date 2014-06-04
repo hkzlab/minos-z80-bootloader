@@ -3,6 +3,9 @@
 #include "utilities.h"
 #include "rom/rom_functions.h"
 
+#define MBR_CODESIZE 0x1BE
+#define MBR_PTABLE_ADDR (__BTLDRADDR__ + MBR_CODESIZE)
+
 void sys_init(void);
 
 void sys_init(void) {
