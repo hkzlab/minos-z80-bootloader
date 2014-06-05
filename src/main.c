@@ -11,6 +11,7 @@
 static MBRStruct *mbr;
 
 void sys_init(void);
+void sys_boot(uint8_t pNo);
 void print_string(const char *str);
 
 void sys_init(void) {
@@ -31,7 +32,12 @@ void print_string(const char *str) {
 		putchar(*(str++));
 }
 
+void sys_boot(uint8_t pNo) {
+	;
+}
+
 void main(void) {
+	uint8_t pNum;
 	char ch;
 
 	sys_init();
@@ -43,13 +49,22 @@ void main(void) {
 		print_string("\r\n");
 
 		switch(ch) {
-			case '0':
-			case '1':
-			case '2':
-			case '3':
 			default:
+			case '0':
+				pNum = 0;
+				break;
+			case '1':
+				pNum = 1;
+				break;
+			case '2':
+				pNum = 2;
+				break;
+			case '3':
+				pNum = 3;
 				break;
 		}
+
+		sys_boot(pNum);	
 	}
 }
 
