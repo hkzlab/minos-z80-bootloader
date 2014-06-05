@@ -8,6 +8,8 @@
 #define MBR_CODESIZE 0x1BE
 #define MBR_PTABLE_ADDR (__BTLDRADDR__ + MBR_CODESIZE)
 
+static MBRStruct *mbr;
+
 void sys_init(void);
 
 void sys_init(void) {
@@ -19,6 +21,8 @@ void sys_init(void) {
 	n8vem_ide_read = (rom_n8vem_ide_read)(*(uint8_t*)(ROM_TABLE_BASE-6));
 	n8vem_ide_reg_rd = (rom_n8vem_ide_reg_rd)(*(uint8_t*)(ROM_TABLE_BASE-10));
 	n8vem_ide_reg_wr = (rom_n8vem_ide_reg_wr)(*(uint8_t*)(ROM_TABLE_BASE-8));
+
+	mbr = (MBRStruct*)__BTLDRADDR__;
 }
 
 void main(void) {
