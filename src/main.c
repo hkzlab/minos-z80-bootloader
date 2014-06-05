@@ -1,7 +1,9 @@
 #include <common_datatypes.h>
 
 #include "utilities.h"
-#include "rom/rom_functions.h"
+
+#include "include/rom_functions.h"
+#include "include/mbr.h"
 
 #define MBR_CODESIZE 0x1BE
 #define MBR_PTABLE_ADDR (__BTLDRADDR__ + MBR_CODESIZE)
