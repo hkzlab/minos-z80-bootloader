@@ -8,11 +8,13 @@
 #define MBR_CODESIZE 0x1BE
 #define MBR_PTABLE_ADDR (__BTLDRADDR__ + MBR_CODESIZE)
 
+
 static MBRStruct *mbr;
 
 void sys_init(void);
 void sys_boot(uint8_t pNo);
 void print_string(const char *str);
+void monitor_jmp(uint8_t *addr);
 
 void sys_init(void) {
 	// Prepare the pointers to rom functions
@@ -33,7 +35,14 @@ void print_string(const char *str) {
 }
 
 void sys_boot(uint8_t pNo) {
-	;
+	uint8_t ch, cl, sect, head;
+
+	head = mbr->partitions[pNo].chs_start_addr[0];
+	ch = mbr->partitions[pNo].chs_start_addr[1] >> 6;
+	cl = mbr->partitions[pNo].chs_start_addr[2];
+	sect = mbr->partitions[pNo].chs_start_addr[1] & 0x3F;
+
+	// TODO: Read the sectors and jump the execution to them.
 }
 
 void main(void) {
@@ -68,3 +77,12 @@ void main(void) {
 	}
 }
 
+void monitor_jmp(uint8_t *addr) __naked {
+	addr;
+
+	__asm
+		pop bc
+		pop hl
+		jp (hl)
+	__endasm;
+}
