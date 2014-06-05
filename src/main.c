@@ -11,6 +11,7 @@
 static MBRStruct *mbr;
 
 void sys_init(void);
+void print_string(const char *str);
 
 void sys_init(void) {
 	// Prepare the pointers to rom functions
@@ -25,11 +26,30 @@ void sys_init(void) {
 	mbr = (MBRStruct*)__BTLDRADDR__;
 }
 
+void print_string(const char *str) {
+	while(*str)
+		putchar(*(str++));
+}
+
 void main(void) {
+	char ch;
+
 	sys_init();
 
-	while(1) { // Endless loop
-		;
+	while(1) {
+		putchar('>');
+		ch = getchar();
+		putchar(ch);
+		print_string("\r\n");
+
+		switch(ch) {
+			case '0':
+			case '1':
+			case '2':
+			case '3':
+			default:
+				break;
+		}
 	}
 }
 
