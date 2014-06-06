@@ -7,7 +7,7 @@
 
 #define MBR_CODESIZE 0x1BE
 #define MBR_PTABLE_ADDR (__BTLDRADDR__ + MBR_CODESIZE)
-
+#define CPM_PARTITION_TYPE 0xDB
 
 static MBRStruct *mbr;
 
@@ -47,34 +47,19 @@ void sys_boot(uint8_t pNo) {
 
 void main(void) {
 	uint8_t pNum;
-	char ch;
 
 	sys_init();
 
-	while(1) {
-		putchar('>');
-		ch = getchar();
-		putchar(ch);
-		print_string("\r\n");
-
-		switch(ch) {
-			default:
-			case '0':
-				pNum = 0;
-				break;
-			case '1':
-				pNum = 1;
-				break;
-			case '2':
-				pNum = 2;
-				break;
-			case '3':
-				pNum = 3;
-				break;
+	for (pNum = 0; pNum < 4; pNum++) {
+		if (mbr->partitions[pNum].type == CPM_PARTITION_TYPE) {
+			sys_boot(pNum);
 		}
-
-		sys_boot(pNum);	
 	}
+
+	// Nothing to do, jumping back to the monitor
+	__asm
+		jp 0xF000
+	__endasm;
 }
 
 void monitor_jmp(uint8_t *addr) __naked {
