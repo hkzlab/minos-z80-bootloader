@@ -9,6 +9,8 @@
 #define MBR_PTABLE_ADDR (__BTLDRADDR__ + MBR_CODESIZE)
 #define CPM_PARTITION_TYPE 0xDB
 
+#define SECTOR_BUFFER_START 0x1200
+
 static MBRStruct *mbr;
 
 void sys_init(void);
@@ -35,6 +37,7 @@ void print_string(const char *str) {
 }
 
 void sys_boot(uint8_t pNo) {
+	CPM_Partition_Descr *cpm_part;
 	uint8_t ch, cl, sect, head;
 
 	head = mbr->partitions[pNo].chs_start_addr[0];
@@ -42,7 +45,9 @@ void sys_boot(uint8_t pNo) {
 	cl = mbr->partitions[pNo].chs_start_addr[2];
 	sect = mbr->partitions[pNo].chs_start_addr[1] & 0x3F;
 
-	// TODO: Read the sectors and jump the execution to them.
+	// Read partition info sector
+	n8vem_ide_read((uint8_t*)SECTOR_BUFFER_START, 4, 0, cl, ch);
+	cpm_part = (CPM_Partition_Descr*)SECTOR_BUFFER_START;
 }
 
 void main(void) {
