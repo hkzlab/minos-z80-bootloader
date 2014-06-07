@@ -18,6 +18,7 @@ typedef struct {
 	uint8_t signature[2];
 } MBRStruct;
 
+/*
 typedef struct {
 	uint16_t	checksum;
 	char		copyright[31];
@@ -27,8 +28,8 @@ typedef struct {
 	uint8_t		sect_tot; // Number of physical sector/tracks
 	uint8_t		options;
 	uint8_t		sec_size; // sector size / 128
-	uint16_t	spt; // Number of 128 byte records per track
-	uint8_t		bsh; // Block shift 3 => 1k, 4 => 2k, 5 => 4k ...
+	uint16_t	spt; // "Sectors Per Track". Total of 128 bytes sectors per track
+	uint8_t		bsh; // Data allocation "Block shift factor" 3 => 1k, 4 => 2k, 5 => 4k ...
 	uint8_t		blm; // Block mask 7 => 1k, 0x0F => 2k, 0x1F => 4k ...
 	uint8_t		exm; // Extent mask
 	uint16_t	dsm; // number of blocks on disk -1
@@ -42,5 +43,5 @@ typedef struct {
 	uint16_t	max_words_bblock;
 	uint16_t	words_badblock;
 } CPM_Partition_Descr;
-
+*/
 #endif /* __MBR_HEADER__ */

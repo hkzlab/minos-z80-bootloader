@@ -37,17 +37,19 @@ void print_string(const char *str) {
 }
 
 void sys_boot(uint8_t pNo) {
-	CPM_Partition_Descr *cpm_part;
-	uint8_t ch, cl, sect, head;
+	uint8_t ch, cl, sect, head, idx;
 
 	head = mbr->partitions[pNo].chs_start_addr[0];
 	ch = mbr->partitions[pNo].chs_start_addr[1] >> 6;
 	cl = mbr->partitions[pNo].chs_start_addr[2];
 	sect = mbr->partitions[pNo].chs_start_addr[1] & 0x3F;
 
-	// Read partition info sector
-	n8vem_ide_read((uint8_t*)SECTOR_BUFFER_START, 4, 0, cl, ch);
-	cpm_part = (CPM_Partition_Descr*)SECTOR_BUFFER_START;
+	// Read first system track sector
+	for (idx = 0; idx < 4; idx++) {
+		n8vem_ide_read((uint8_t*)(SECTOR_BUFFER_START + (0x200 * idx)), sect + idx, head, cl, ch);
+	}
+
+	monitor_jmp((uint8_t*)SECTOR_BUFFER_START);
 }
 
 void main(void) {
