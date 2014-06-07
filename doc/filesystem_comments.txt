@@ -30,5 +30,7 @@ WARNING: Attention must be paid to how your operating system is translating
 the disk structure in CHS mode: My OSX machine detected a CF card as having
 63 sectors per track, while with direct access from the monitor i had 32 
 sectors per track.
-I had to force the disk structure with fdisk.
+In fact my CF card (SanDisk 64MB) seems to be 490 cylinders,
+8 heads and 32 sectors.
+I had to force this disk structure with fdisk.
 
