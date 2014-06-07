@@ -53,7 +53,7 @@ void sys_boot(uint8_t pNo) {
 }
 
 void main(void) {
-//	uint8_t pNum;
+	uint8_t pNum;
 
 	sys_init();
 
