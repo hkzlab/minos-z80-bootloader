@@ -26,4 +26,9 @@ $ mkfs.cpm -b ./sys_trk_A -b ./sys_trk_B -b ./sys_trk_C -b ./sys_trk_D \
 Where sys_trk are 2048b files to be copied on the first four reserved tracks
 on the partition.
 
+WARNING: Attention must be paid to how your operating system is translating
+the disk structure in CHS mode: My OSX machine detected a CF card as having
+63 sectors per track, while with direct access from the monitor i had 32 
+sectors per track.
+I had to force the disk structure with fdisk.
 

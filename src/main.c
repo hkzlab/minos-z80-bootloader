@@ -49,6 +49,8 @@ void sys_boot(uint8_t pNo) {
 		n8vem_ide_read((uint8_t*)(SECTOR_BUFFER_START + (0x200 * idx)), sect + idx, head, cl, ch);
 	}
 
+	print_string("\r\nBOOTING!\r\n");
+
 	monitor_jmp((uint8_t*)SECTOR_BUFFER_START);
 }
 
@@ -56,13 +58,13 @@ void main(void) {
 	uint8_t pNum;
 
 	sys_init();
-
+	
 	for (pNum = 0; pNum < 4; pNum++) {
 		if (mbr->partitions[pNum].type == CPM_PARTITION_TYPE) {
 			sys_boot(pNum);
 		}
 	}
-
+	
 	// Nothing to do, jumping back to the monitor
 	__asm
 		jp 0xF000
