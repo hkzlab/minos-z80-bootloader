@@ -20,13 +20,13 @@ void monitor_jmp(uint8_t *addr);
 
 void sys_init(void) {
 	// Prepare the pointers to rom functions
-	getchar = (rom_getchar)(*(uint8_t*)(ROM_TABLE_BASE-4));
-	putchar = (rom_putchar)(*(uint8_t*)(ROM_TABLE_BASE-2));
+	getchar = (rom_getchar)(*(uint16_t*)(ROM_TABLE_BASE-4));
+	putchar = (rom_putchar)(*(uint16_t*)(ROM_TABLE_BASE-2));
 
-	n8vem_ide_init = (rom_n8vem_ide_init)(*(uint8_t*)(ROM_TABLE_BASE-12));
-	n8vem_ide_read = (rom_n8vem_ide_read)(*(uint8_t*)(ROM_TABLE_BASE-6));
-	n8vem_ide_reg_rd = (rom_n8vem_ide_reg_rd)(*(uint8_t*)(ROM_TABLE_BASE-10));
-	n8vem_ide_reg_wr = (rom_n8vem_ide_reg_wr)(*(uint8_t*)(ROM_TABLE_BASE-8));
+	n8vem_ide_init = (rom_n8vem_ide_init)(*(uint16_t*)(ROM_TABLE_BASE-12));
+	n8vem_ide_read = (rom_n8vem_ide_read)(*(uint16_t*)(ROM_TABLE_BASE-6));
+	n8vem_ide_reg_rd = (rom_n8vem_ide_reg_rd)(*(uint16_t*)(ROM_TABLE_BASE-10));
+	n8vem_ide_reg_wr = (rom_n8vem_ide_reg_wr)(*(uint16_t*)(ROM_TABLE_BASE-8));
 
 	mbr = (MBRStruct*)__BTLDRADDR__;
 }
@@ -53,7 +53,7 @@ void sys_boot(uint8_t pNo) {
 }
 
 void main(void) {
-	uint8_t pNum;
+//	uint8_t pNum;
 
 	sys_init();
 
