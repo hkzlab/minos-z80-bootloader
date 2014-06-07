@@ -1,0 +1,29 @@
+NOTES:
+*	The bootloader is built to be run from RAM address 0x1000. It is duty of
+	the ROM monitor to copy it there and execute it.
+
+*	The bootloader must be 446 bytes long, AT MOST: it must fit inside 	an MBR
+	code section without overwriting the partition table.
+
+*	The bootloader scans the partition table for a partition with type DBh,
+	then copies the first track to RAM address 0x1200.
+	Each track has size 0x800, and each IDE disk sector is 512 bytes, so
+	4 sectors must be copied.
+
+*	The bootloader then executes the code in 0x1200. This starts either the
+	OS or a second stage bootloader.
+
+*	There is space for 4 tracks on the CP/M partitions created by cpmtools
+	The first is loaded by the bootloader. The rest are reserved for the OS.
+
+COMMANDS:
+To copy the bootloader on a drive
+$ dd if=bootloader.bin of=/dev/diskX
+
+To format a drive using cpmtools
+$ mkfs.cpm -b ./sys_trk_A -b ./sys_trk_B -b ./sys_trk_C -b ./sys_trk_D \
+	/dev/diskXsZ
+Where sys_trk are 2048b files to be copied on the first four reserved tracks
+on the partition.
+
+
